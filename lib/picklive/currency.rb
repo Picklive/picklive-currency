@@ -126,7 +126,7 @@ module Picklive
     module ModelMethods
 
       def self.included(base)
-        if defined?(ActiveRecord::Base) && base.kind_of?(ActiveRecord::Base)
+        if defined?(ActiveRecord::Base) && base.superclass == ActiveRecord::Base
           base.class_eval do
             scope :cash_only,    where(:currency_code => Picklive::Currency.cash_codes)
             scope :virtual_only, where(:currency_code => Picklive::Currency.virtual_codes)
