@@ -82,6 +82,10 @@ module Picklive
       def to_i;  integer_amount;       end
       def to_f;  integer_amount.to_f;  end
       def inspect; "<#{self.class.code}:#{amount}>"; end
+
+      def for_sentence
+        to_s(:short => true)
+      end
     end
 
 
@@ -98,7 +102,7 @@ module Picklive
         s = number_to_currency(amount, :unit => '£')
         if options[:short]
           if amount < 1.0
-            s = "#{(integer_amount * self.class.precision).round}p"
+            s = "#{integer_amount}p"
           else
             s = s.gsub(/\.0+$/, '')
           end

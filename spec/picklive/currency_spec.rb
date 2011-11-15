@@ -41,6 +41,11 @@ describe Picklive::Currency do
     (GBP[3.10] == 310).should be_false
     (GBP[3.10] != 310).should be_true
   end
+
+  it "has a format that can be included in sentences" do
+    "Give me #{GBP[5].for_sentence}".should == "Give me £5"
+    "Give me #{GBP[0.1].for_sentence}".should == "Give me 10p"
+  end
 end
 
 
