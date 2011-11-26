@@ -1,3 +1,5 @@
+# -*- encoding : utf-8 -*-
+
 require 'picklive/currency'
 
 describe Picklive::Currency do
