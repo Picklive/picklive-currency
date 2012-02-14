@@ -5,7 +5,7 @@ require 'picklive/currency/autoload'
 
 Gem::Specification.new do |s|
   s.name        = "picklive-currency"
-  s.version     = "0.0.1"
+  s.version     = "1.0.0"
   s.authors     = ["Levente Bagi"]
   s.email       = ["levente@picklive.com"]
   s.homepage    = "https://tech.picklive.com"
