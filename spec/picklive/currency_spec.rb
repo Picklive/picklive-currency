@@ -12,6 +12,10 @@ describe Picklive::Currency do
     Picklive::Currency['chips'].should == Chips
   end
 
+  it "knows about tickets" do
+    Picklive::Currency['tickets'].should == Ticket
+  end
+
   describe "currency 0 value" do
     it "is equal to 0 as integer" do
       (GBP.new(0) == 0).should be_true

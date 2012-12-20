@@ -9,12 +9,13 @@ module Picklive
       puts "WARN: Currency code #{code.inspect} is DEPRECATED" if code == 'chip'
       return GBP if code == 'GBP'
       return Chips if code == 'chips' || code == 'chip'
+      return Ticket if code == 'tickets' || code == 'ticket'
       raise ArgumentError.new("unknown currency code: #{code.inspect}")
     end
 
-    def self.all            ; [GBP, Chips] ; end
-    def self.cash_codes     ; 'GBP'       ; end
-    def self.virtual_codes  ; 'chips'      ; end
+    def self.all            ; [GBP, Chips, Ticket]      ; end
+    def self.cash_codes     ; 'GBP'                     ; end
+    def self.virtual_codes  ; Array('chips', 'tickets') ; end
 
     # To create a currency object:
     #
@@ -128,6 +129,14 @@ module Picklive
       end
     end
 
+    class Ticket < Chips
+      def self.code; 'tickets' ; end
+
+      def to_s
+        pluralize(amount, "Ticket")
+      end
+    end
+
 
     # It provides scopes for models that have a `currency_code` method.
     module ModelMethods
@@ -194,6 +203,7 @@ end
 
 GBP = Picklive::Currency::GBP
 Chips = Picklive::Currency::Chips
+Ticket = Picklive::Currency::Ticket
 
 class Fixnum
   def percent
