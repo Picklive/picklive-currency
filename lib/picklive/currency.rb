@@ -15,7 +15,7 @@ module Picklive
 
     def self.all            ; [GBP, Chips, Ticket]      ; end
     def self.cash_codes     ; 'GBP'                     ; end
-    def self.virtual_codes  ; Array('chips', 'tickets') ; end
+    def self.virtual_codes  ; ['chips', 'tickets']      ; end
 
     # To create a currency object:
     #
