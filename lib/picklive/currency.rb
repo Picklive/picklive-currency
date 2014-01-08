@@ -7,14 +7,18 @@ module Picklive
 
     def self.[](code)
       puts "WARN: Currency code #{code.inspect} is DEPRECATED" if code == 'chip'
-      return GBP if code == 'GBP'
-      return Chips if code == 'chips' || code == 'chip'
-      return Ticket if code == 'tickets' || code == 'ticket'
-      raise ArgumentError.new("unknown currency code: #{code.inspect}")
+      case code
+        when 'GBP' then GBP
+        when 'USD' then USD
+        when 'chip', 'chips' then Chips
+        when 'ticket', 'tickets' then Ticket
+      else
+        raise ArgumentError.new("unknown currency code: #{code.inspect}")
+      end
     end
 
-    def self.all            ; [GBP, Chips, Ticket]      ; end
-    def self.cash_codes     ; 'GBP'                     ; end
+    def self.all            ; [GBP, USD, Chips, Ticket] ; end
+    def self.cash_codes     ; %w(GBP USD)               ; end
     def self.virtual_codes  ; ['chips', 'tickets']      ; end
 
     # To create a currency object:
@@ -115,6 +119,28 @@ module Picklive
       end
     end
 
+    class USD < Base
+      def self.precision    ; 100    ; end
+      def self.code         ; 'USD'  ; end
+      def self.real?        ; true   ; end
+      def self.symbol       ; '$'    ; end
+      def self.html_symbol  ; '$'    ; end
+
+      include ActionView::Helpers::NumberHelper
+
+      def to_s options = {}
+        s = number_to_currency(amount, :unit => '$')
+        if options[:short]
+          if amount < 1.0
+            s = "#{integer_amount}c"
+          else
+            s = s.gsub(/\.0+$/, '')
+          end
+        end
+        s
+      end
+    end
+
 
     class Chips < Base
       def self.precision    ; 1       ; end
@@ -202,6 +228,7 @@ module Picklive
 end
 
 GBP = Picklive::Currency::GBP
+USD = Picklive::Currency::USD
 Chips = Picklive::Currency::Chips
 Ticket = Picklive::Currency::Ticket
 
