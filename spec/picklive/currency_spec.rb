@@ -8,6 +8,10 @@ describe Picklive::Currency do
     Picklive::Currency['GBP'].should == GBP
   end
 
+  it "knows about USD" do
+    Picklive::Currency['USD'].should == USD
+  end
+
   it "knows about chips" do
     Picklive::Currency['chips'].should == Chips
   end
