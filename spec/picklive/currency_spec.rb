@@ -32,6 +32,18 @@ describe Picklive::Currency do
     end
   end
 
+  describe "USD currency 0 value" do
+    it "is equal to 0 as integer" do
+      (USD.new(0) == 0).should be_true
+    end
+  end
+
+  describe "USD currency nonzero value" do
+    it "is not equal to the integer value" do
+      (USD.new(100) == 100).should be_false
+    end
+  end
+
   it "can be created in to different ways, which create equal objects" do
     GBP[5.20].should == GBP.new(520)
   end

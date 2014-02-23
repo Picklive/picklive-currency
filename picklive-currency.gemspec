@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email       = ["levente@picklive.com"]
   s.homepage    = "https://tech.picklive.com"
   s.summary     = %q{Picklive Currency}
-  s.description = %q{Currency classes that can represent GBP or Chips}
+  s.description = %q{Currency classes that can represent GBP, USD or Chips}
 
   s.rubyforge_project = "picklive-currency"
 

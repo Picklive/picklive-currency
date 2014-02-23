@@ -255,6 +255,24 @@ class Fixnum
     self * 100
   end
 
+  def dollars
+    (self * 100).cents
+  end
+  alias_method :dollar, :dollars
+
+  def cents
+    Picklive::Currency::USD.new(self)
+  end
+  alias_method :cent, :cents
+
+  def to_dollars
+    self / 100.0
+  end
+
+  def to_cents
+    self * 100
+  end
+
   def chips
     Picklive::Currency::Chips.new(self)
   end
@@ -269,6 +287,16 @@ class Float
   def to_pennies
     (self * 100).round
   end
+
+  def dollars
+    (self * 100).round.cents
+  end
+  alias_method :dollar, :dollars
+
+  def to_cents
+    (self * 100).round
+  end
+
 end
 
 class String
@@ -276,5 +304,10 @@ class String
     to_f.pounds
   end
   alias_method :pound, :pounds
+
+  def dollars
+    to_f.dollars
+  end
+  alias_method :dollar, :dollars
 end
 
