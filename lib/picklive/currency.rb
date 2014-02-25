@@ -163,6 +163,12 @@ module Picklive
       end
     end
 
+    mattr_accessor :default_currency
+    @@default_currency = GBP
+
+    def self.setup
+      yield self
+    end
 
     # It provides scopes for models that have a `currency_code` method.
     module ModelMethods
@@ -202,7 +208,7 @@ module Picklive
 
                 define_method "#{field}_in_currency=" do |amount_in_currency|
                   if ! amount_in_currency.is_a?(Picklive::Currency::Base)
-                    amount_in_currency = Picklive::Currency::GBP.new((amount_in_currency.to_f * Picklive::Currency::GBP.precision).round)
+                    amount_in_currency = Picklive::Currency::default_currency.new((amount_in_currency.to_f * Picklive::Currency::default_currency.precision).round)
                   end
                   if self.respond_to?("currency_code=")
                     self.currency_code = amount_in_currency.class.code
