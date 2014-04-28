@@ -28,6 +28,8 @@ module Picklive
     #   GBP['10.00']  # -> <GBP:10.0>
     #   Chips[1000]   # -> <Chips:1000>
     class Base
+      include ActionView::Helpers::NumberHelper
+
       def self.fake?              ; not real? ; end
       def self.cash?              ; real?     ; end
       def self.virtual?           ; !cash?    ; end
@@ -91,6 +93,15 @@ module Picklive
       def to_f;  integer_amount.to_f;  end
       def inspect; "<#{self.class.code}:#{amount}>"; end
 
+      def to_s(options = {})
+        formatted_amount = number_to_currency(amount, :unit => self.class.symbol)
+        if options[:short]
+          formatted_amount.gsub(/\.0+$/, '')
+        else
+          formatted_amount
+        end
+      end
+
       def for_sentence
         to_s(:short => true)
       end
@@ -103,20 +114,6 @@ module Picklive
       def self.real?        ; true   ; end
       def self.symbol       ; '£'    ; end
       def self.html_symbol  ; '&pound;' ; end
-
-      include ActionView::Helpers::NumberHelper
-
-      def to_s options = {}
-        s = number_to_currency(amount, :unit => '£')
-        if options[:short]
-          if amount < 1.0
-            s = "#{integer_amount}p"
-          else
-            s = s.gsub(/\.0+$/, '')
-          end
-        end
-        s
-      end
     end
 
     class USD < Base
@@ -125,22 +122,7 @@ module Picklive
       def self.real?        ; true   ; end
       def self.symbol       ; '$'    ; end
       def self.html_symbol  ; '$'    ; end
-
-      include ActionView::Helpers::NumberHelper
-
-      def to_s options = {}
-        s = number_to_currency(amount, :unit => '$')
-        if options[:short]
-          if amount < 1.0
-            s = "#{integer_amount}c"
-          else
-            s = s.gsub(/\.0+$/, '')
-          end
-        end
-        s
-      end
     end
-
 
     class Chips < Base
       def self.precision    ; 1       ; end

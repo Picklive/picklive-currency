@@ -66,7 +66,7 @@ describe Picklive::Currency do
 
   it "has a format that can be included in sentences" do
     "Give me #{GBP[5].for_sentence}".should == "Give me £5"
-    "Give me #{GBP[0.1].for_sentence}".should == "Give me 10p"
+    "Give me #{GBP[0.1].for_sentence}".should == "Give me £0.10"
   end
 end
 
