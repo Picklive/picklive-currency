@@ -10,6 +10,7 @@ module Picklive
       case code
         when 'GBP' then GBP
         when 'USD' then USD
+        when 'NGN' then NGN
         when 'chip', 'chips' then Chips
         when 'ticket', 'tickets' then Ticket
       else
@@ -17,9 +18,9 @@ module Picklive
       end
     end
 
-    def self.all            ; [GBP, USD, Chips, Ticket] ; end
-    def self.cash_codes     ; %w(GBP USD)               ; end
-    def self.virtual_codes  ; ['chips', 'tickets']      ; end
+    def self.all            ; [GBP, USD, NGN, Chips, Ticket] ; end
+    def self.cash_codes     ; %w(GBP USD NGN)                ; end
+    def self.virtual_codes  ; ['chips', 'tickets']           ; end
 
     # To create a currency object:
     #
@@ -124,6 +125,14 @@ module Picklive
       def self.html_symbol  ; '$'    ; end
     end
 
+    class NGN < Base
+      def self.precision    ; 100    ; end
+      def self.code         ; 'NGN'  ; end
+      def self.real?        ; true   ; end
+      def self.symbol       ; '₦'    ; end
+      def self.html_symbol  ; '&#8358;'    ; end
+    end
+
     class Chips < Base
       def self.precision    ; 1       ; end
       def self.code         ; 'chips' ; end
@@ -217,6 +226,7 @@ end
 
 GBP = Picklive::Currency::GBP
 USD = Picklive::Currency::USD
+NGN = Picklive::Currency::NGN
 Chips = Picklive::Currency::Chips
 Ticket = Picklive::Currency::Ticket
 
@@ -298,4 +308,3 @@ class String
   end
   alias_method :dollar, :dollars
 end
-
