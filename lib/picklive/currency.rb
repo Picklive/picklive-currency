@@ -93,6 +93,7 @@ module Picklive
       def to_i;  integer_amount;       end
       def to_f;  integer_amount.to_f;  end
       def inspect; "<#{self.class.code}:#{amount}>"; end
+      def succ; self.+(1); end
 
       def to_s(options = {})
         formatted_amount = number_to_currency(amount, :unit => self.class.symbol)

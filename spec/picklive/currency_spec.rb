@@ -68,6 +68,11 @@ describe Picklive::Currency do
     "Give me #{GBP[5].for_sentence}".should == "Give me £5"
     "Give me #{GBP[0.1].for_sentence}".should == "Give me £0.10"
   end
+
+  it "can be used in a range" do
+    (GBP[10]..GBP[20]).include?(GBP[15]).should be_true
+    (GBP[10]..GBP[20]).include?(GBP[25]).should be_false
+  end
 end
 
 
